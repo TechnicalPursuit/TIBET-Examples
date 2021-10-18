@@ -23,7 +23,7 @@ In particular, the pizza application focuses on leveraging TIBET's:
 - Full-stack functionality including quick and easy route/mock construction.
 
 Note that this application is considered a permanent work-in-progress, evolving
-and expanding as to include more of TIBET's functionality over time. It's also
+and expanding to include more of TIBET's functionality over time. It's also
 intended to be the go-to sample you refer to when you want to see various
 aspects of TIBET in action.
 
