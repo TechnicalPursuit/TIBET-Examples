@@ -1,0 +1,22 @@
+{
+    "type": "flow",
+    "name": "templatemail",
+    "owner": "Team TIBET",
+    "tasks": {
+        "structure": "sequence",
+        "sequence": [{
+            "task": "templater"
+        }, {
+            "task": "smtp",
+            "params": {
+                "html": "{{params.text}}"
+            },
+            "stdio": {
+                "result": "text"
+            }
+        }]
+    },
+    "params": {
+        "job-level params": "go here"
+    }
+}

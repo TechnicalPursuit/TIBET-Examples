@@ -1,0 +1,35 @@
+{
+    "default": {
+        "csp": {
+            "scriptSrc": ["self", "unsafe-inline", "unsafe-eval"],
+            "styleSrc": ["self", "unsafe-inline"]
+        },
+        "https": false,
+        "https_port": 1443,
+        "port": 1407,
+        "plugins": {
+            "tds": ["tasks"]
+        },
+        "static": {
+            "private": []
+        },
+        "tasks": {
+            "db_name": "pizza_tasks"
+        },
+        "vcard": {
+            "strategy": "tds"
+        }
+    },
+    "development": {
+        "log": {
+            "transports": ["file", "console"]
+        },
+        "plugins": {
+            "tds": ["cli", "patch", "tasks", "watch"]
+        },
+        "use_cli": true
+    },
+    "production": {
+        "https": true
+    }
+}

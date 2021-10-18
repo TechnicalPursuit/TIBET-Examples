@@ -1,0 +1,42 @@
+<pizza:sides>
+
+    <!--
+        NOTE: you can inline static data using JSON syntax wrapped in CDATA blocks. This data
+        is then set as the content/value of the URN referenced via the name attribute. When
+        we process that URN we can also provide the content type we want back (Array here).
+    -->
+    <tibet:data name="urn:app:pizza_sides" content="Array">
+    <![CDATA[
+        ["lemonade", "limoncello", "lemon gelato", "lemon tiramisu"]
+    ]]>
+    </tibet:data>
+
+    <header>
+        <h1>Sides/Extras</h1>
+    </header>
+
+    <!--
+        A bind:repeat using a Type Constant to provide the side dishes/desserts.
+
+        NOTE bind:repeat's content is extracted and processed as a TIBET template, hence the
+        embedded {{blah}} syntax. TIBET uses {{ and }} to delineate templating blocks. Within
+        those blocks TIBET supports a limited set of TIBET Shell (TSH) expressions including
+        piping to a data formatter ($_ .% titleCase) as shown in the <label> content.
+
+        Also NOTE the use of a simplified "pojo" syntax in the on:click here. TIBET does a
+        simple safe parse to get the value. In this case it allows our on:click to
+        define not only the signal name but the payload we want to include.
+    -->
+
+    <div class="body" bind:repeat="urn:app:pizza_sides">
+        <span class="field">
+            <input name="{{$_}}" type="checkbox" value="{{$_}}"/>
+            <label for="{{$_}}"
+                on:click="{signal: ToggleItem, payload: {name: {{$_}}}}">{{$_ .% titleCase}}</label>
+        </span>
+    </div>
+
+    <footer>
+        <button name="sides" on:click="AddSides">Add To Order</button>
+    </footer>
+</pizza:sides>

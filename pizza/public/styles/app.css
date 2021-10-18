@@ -1,0 +1,110 @@
+/*
+ * @overview CSS for the pizza application.
+ */
+
+@import url("../TIBET-INF/boot/styles/tibet_intro.css");
+
+/**
+ *      Font Sizing
+ */
+
+/*
+For pixels (px) Declare this percent (%)
+10   77
+11   85
+12   93
+13   100
+14   108
+15   116
+16   123.1
+17   131
+18   138.5
+19   146.5
+20   153.9
+21   161.6
+22   167
+23   174
+24   182
+25   189
+26   197
+*/
+
+/**
+ *      Variable Definitions
+ */
+
+:root {
+
+    /**
+     * fonts
+     */
+
+    --primary-font-family: "Roboto", sans-serif;
+
+    /**
+     * colors
+     */
+
+    /* greyscale spectrum */
+
+    --black: hsl(0, 0%, 0%);
+    --off-black: hsl(0, 0%, 6.25%);
+    --dark-dark-grey: hsl(0, 0%, 12.5%);
+    --dark-grey: hsl(0, 0%, 25%);
+    --med-dark-grey: hsl(0, 0%, 37.5%);
+    --grey: hsl(0, 0%, 50%);
+    --med-grey: hsl(0, 0%, 50%);
+    --med-light-grey: hsl(0, 0%, 62.5%);
+    --light-grey: hsl(0, 0%, 75%);
+    --light-light-grey: hsl(0, 0%, 87.5%);
+    --off-white: hsl(0, 0%, 93.75%);
+    --white: hsl(0, 0%, 100%);
+
+    /* coderats default spectrum */
+
+    --bright-gold: hsl(44, 100%, 50%);
+    --muted-gold-semi: hsla(44, 72%, 35%, 0.5);
+    --muted-gold: hsl(44, 72%, 35%);
+    --pastel-gold: hsl(44, 100%, 63%);
+
+    --bright-green: hsl(120, 100%, 23%);
+    --muted-green: hsl(120, 55%, 22%);
+    --pastel-green: hsl(120, 41%, 43%);
+
+    --bright-blue: hsl(212, 100%, 50%);
+    --muted-blue: hsl(212, 72%, 35%);
+    --pastel-blue: hsl(212, 100%, 63%);
+
+    --bright-maroon: hsl(0, 100%, 23%);
+    --muted-maroon: hsl(0, 55%, 22%);
+    --pastel-maroon: hsl(0, 41%, 43%);
+
+    --bright-red: hsl(0, 100%, 35%);
+
+    --primary-gold: var(--bright-gold);
+    --primary-green: var(--bright-green);
+    --primary-blue: var(--bright-blue);
+    --primary-maroon: var(--bright-maroon);
+    --primary-red: var(--bright-red);
+}
+
+/**
+ *      XHTML Baseline
+ */
+
+body {
+    overflow-y: scroll;
+}
+
+*|*::placeholder {
+    color: var(--med-light-grey);
+}
+
+*|*::selection {
+    color: var(--white);
+    background-color: var(--bright-gold);
+}
+
+*|* {
+    user-select: none;
+}

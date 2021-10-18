@@ -1,0 +1,64 @@
+/**
+ * @overview 'APP.pizza.orderdetails' styles.
+ */
+
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace tibet url("http://www.technicalpursuit.com/1999/tibet");
+@namespace pizza url("urn:app:pizza");
+
+pizza|orderdetails {
+    display: flex;
+    flex-direction: column;
+    border-right: 1px solid var(--primary-gold);
+}
+
+pizza|orderdetails > header {
+    flex-basis: 2em;
+    flex-grow: 0;
+    width: 100%;
+}
+
+pizza|orderdetails > div[class~="body"] {
+    flex-grow: 1;
+    margin: 0;
+    padding: 1em;
+    font-size: 108%;
+}
+
+pizza|orderdetails > div[class~="body"] div[class~="field"] {
+    cursor: default;
+    margin: 0.5em 0 0 0;
+}
+
+pizza|orderdetails > div[class~="body"] label {
+    line-height: 1.5em;
+    margin: 0;
+    padding: 0 1em 0 0.5em;
+    white-space: nowrap;
+}
+
+pizza|orderdetails > div[class~="body"] div[class~="summary"] table {
+    margin-left: 5em;
+}
+
+pizza|orderdetails > div[class~="body"] table col[name="size"] {
+    width: 5em;
+}
+
+pizza|orderdetails > div[class~="body"] table caption {
+    text-align: left;
+    font-weight: bold;
+}
+
+pizza|orderdetails > div[class~="body"] table th {
+    font-weight: normal;
+}
+
+pizza|orderdetails > footer {
+    flex-basis: 2em;
+    flex-grow: 0;
+
+    display: flex;
+    justify-content: space-around;
+    align-items: center;
+}

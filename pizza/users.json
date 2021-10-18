@@ -1,0 +1,13 @@
+{
+    "default": {
+    },
+    "development": {
+        "guest": {
+            "id": "guest",
+            "org": "public",
+            "unit": "public",
+            "pass": "*",
+            "role": []
+        }
+    }
+}

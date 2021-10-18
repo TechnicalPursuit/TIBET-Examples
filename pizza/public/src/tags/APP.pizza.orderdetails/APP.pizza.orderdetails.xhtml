@@ -1,0 +1,40 @@
+<pizza:orderdetails>
+    <header>
+        <h1>Order Details</h1>
+    </header>
+
+    <!--
+        Scoped bindings using bind:scope on the outer body div, [[name]] and [[phone]]
+        bind references which refer to that "top level" and a bind:repeat at the
+        <tbody> which can be thought of as being concatenated to the top bind:scope. The
+        result is our tbody generates one row per pizza and uses the pizza.diameter and
+        the pizza.toppings as the column values.
+    -->
+    <div class="body" bind:scope="urn:app:order#tibet()">
+        <div class="summary">
+            <div class="field name">
+                <label>Name:</label><span>[[name]]</span>
+            </div>
+            <div class="field phone">
+                <label>Phone:</label><span>[[phone]]</span>
+            </div>
+            <div class="field pizzas">
+                <label>Pizzas:</label>
+                <table class="pizzas">
+                    <colgroup><col name="size"/><col name="toppings"/></colgroup>
+                    <tbody bind:repeat="pizzas">
+                        <tr><td>[[diameter]]</td><td>[[toppings]]</td></tr>
+                    </tbody>
+                </table>
+            </div>
+            <div class="field sides">
+                <label>Sides:</label><span>[[sides]]</span>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <button name="clear" on:click="ClearOrder">Clear All</button>
+        <button name="order" on:click="SendOrder">Order Now</button>
+    </footer>
+</pizza:orderdetails>

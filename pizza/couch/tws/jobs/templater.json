@@ -1,0 +1,16 @@
+{
+    "type": "job",
+    "flow": "templater",
+    "owner": "Team TIBET",
+    "params": {
+        "tasks": {
+            "structure": "sequence",
+            "sequence": [{
+                "task": "templater",
+                "params": {
+                    "template": "[[template]]"
+                }
+            }]
+        }
+    }
+}

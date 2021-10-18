@@ -1,0 +1,24 @@
+<pizza:info>
+    <!--
+        Display formatter and change notification via ui:display and on:change.
+
+        The ui:display attribute can take any display formatter name which can be
+        found via TIBET's as()/from() formatting/parsing pair of transforms.
+
+        The on: prefix lets you refer to any TIBET signal or low-level DOM signal.
+        Events such as change, blur, focus, etc. can be "redirected" via this approach
+        as can TIBET's higher-level events such as UIActivate, UIDeactivate, etc. Here
+        we remap the DOM change signal to an UpdateOrderInfo signal which the
+        pizza:info instance handles via defineHandler('UpdateOrderInfo', ...).
+    -->
+    <div class="field">
+        <label for="ordername">Name:</label>
+        <input name="ordername" type="text" placeholder="order name" tabindex="1"
+            ui:display="startUpper" on:change="UpdateOrderInfo" />
+    </div>
+    <div class="field">
+        <label for="phone">Phone:</label>
+        <input name="phone" type="text" placeholder="phone" tabindex="2"
+            on:change="UpdateOrderInfo" />
+    </div>
+</pizza:info>

@@ -1,0 +1,11 @@
+{
+    "type": "task",
+    "name": "stripe",
+    "owner": "DEFAULT",
+    "plugin": "stripe-purchase",
+    "params": {
+        "public_key": "",
+        "secret_key": "",
+        "description": ""
+    }
+}

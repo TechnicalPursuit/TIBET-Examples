@@ -1,0 +1,11 @@
+{
+    "type": "flow",
+    "name": "templater",
+    "owner": "Team TIBET",
+    "tasks": {
+        "structure": "sequence",
+        "sequence": [{
+            "task": "templater"
+        }]
+    }
+}

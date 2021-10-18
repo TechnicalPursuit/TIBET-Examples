@@ -1,0 +1,14 @@
+{
+    "type": "task",
+    "name": "sendmail",
+    "owner": "DEFAULT",
+    "plugin": "mail-sendmail",
+    "params": {
+        "transport": {
+            "path": "sendmail",
+            "newline": "unix"
+        },
+        "from": "your@fromaddress",
+        "html": "<code>{{job._id}}</code>"
+    }
+}

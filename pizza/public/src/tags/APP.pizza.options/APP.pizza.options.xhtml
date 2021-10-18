@@ -1,0 +1,48 @@
+<pizza:options>
+
+    <!--
+        NOTE: you can inline static data using JSON syntax wrapped in CDATA blocks. This data
+        is then set as the content/value of the URN referenced via the name attribute. When
+        we process that URN we can also provide the content type we want back (Array here).
+        The select list then uses this static list for its options. (Overkill, but this is
+        an example app intended to demonstrate what's possible, not always what's efficient.)
+    -->
+    <tibet:data name="urn:app:pizza_sizes" content="Array">
+    <![CDATA[
+        ["large", "medium", "small"]
+    ]]>
+    </tibet:data>
+
+    <header>
+        <h1>Pizza Options</h1>
+    </header>
+
+    <div class="body">
+        <div class="field">
+            <label for="sizes">Size:</label>
+                <!-- A subtlety here... value: refers to the select's current value
+                    while data: refers to the data used to populate the <options> -->
+                <select name="sizes" tabindex="3"
+                    bind:in="{value: urn:app:pizza_size, data: urn:app:pizza_sizes}"/>
+        </div>
+
+        <!--
+            The toppings are generated from a Type constant we access via TIBET URN and
+            make use of bind:repeat and TIBET's templating syntax to inject values. The
+            $_ value represents the "current value" in the iteration.
+        -->
+        <div class="field">
+            <ul class="toppings" bind:repeat="urn:tibet:APP.pizza.pizza#tibet(TOPPINGS)">
+                <li class="topping">
+                    <input name="{{$_}}" type="checkbox" value="{{$_}}"/>
+                    <label for="{{$_}}"
+                        on:click="{signal: ToggleItem, payload: {name: {{$_}}}}">{{$_}}</label>
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <footer>
+        <button name="pizza" on:click="AddPizza">Add To Order</button>
+    </footer>
+</pizza:options>

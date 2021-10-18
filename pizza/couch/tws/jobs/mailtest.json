@@ -1,0 +1,17 @@
+{
+    "type": "job",
+    "flow": "mailtest",
+    "owner": "Team TIBET",
+    "params": {
+        "tasks": {
+            "structure": "sequence",
+            "sequence": [{
+                "task": "smtp",
+                "params": {
+                    "to": "[[to_address]]",
+                    "subject": "[[subject]]"
+                }
+            }]
+        }
+    }
+}

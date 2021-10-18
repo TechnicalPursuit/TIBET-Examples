@@ -1,0 +1,15 @@
+{
+    "type": "job",
+    "flow": "sample",
+    "owner": "Team TIBET",
+    "params": {
+        "tasks": {
+            "structure": "sequence",
+            "sequence": [{
+                "task": "sample",
+                "params": {
+                }
+            }]
+        }
+    }
+}

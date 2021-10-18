@@ -1,0 +1,109 @@
+/**
+ * @overview 'APP.pizza.app' styles.
+ */
+
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace tibet url("http://www.technicalpursuit.com/1999/tibet");
+@namespace pizza url("urn:app:pizza");
+
+/**
+ * If you don't transform from XML form (tags in the page remain in their
+ * <pizza:app/> form) use rules of this form:
+ */
+pizza|app {
+    display: flex;
+    flex-direction: column;
+    min-height: 100%;
+    width: 100%;
+}
+
+pizza|app > *|* {
+    flex-grow: 1;
+    border: 0;
+
+    background-image: url("../../../media/lemons.jpg");
+    background-size: cover;
+}
+
+pizza|app > header {
+    flex-basis: 2em;
+    flex-grow: 0;
+    text-align: center;
+
+    border: 0;
+    color: var(--off-black);
+    border-bottom: 1px solid var(--off-black);
+}
+
+pizza|app > header > h1 {
+    margin: 0.5em 0;
+}
+
+pizza|app > header > h3 {
+    margin: 0.5em 0;
+}
+
+pizza|app > div[class~="body"] {
+    display: flex;
+    flex-direction: column;
+    background-image: none;
+    background-color: var(--off-white);
+}
+
+pizza|app > footer {
+    flex-grow: 0;
+    flex-basis: 2em;
+
+    font-size: 93%;
+    line-height: 2em;
+    text-align: center;
+
+    border-top: 1px solid var(--off-black);
+    color: var(--off-black);
+    background-color: var(--primary-gold);
+}
+
+pizza|app button {
+    width: 10em;
+    height: 2em;
+    margin: 1em 0;
+
+    font-size: 123.1%;
+
+    border: 3px solid var(--bright-gold);
+    border-radius: 5px;
+    background-color: var(--white);
+}
+
+pizza|app button:hover {
+    background: hsla(44, 100%, 50%, 25%);
+}
+
+pizza|app button:disabled:hover {
+    background: var(--white);
+}
+
+pizza|app input[type="text"]:hover {
+    background: hsla(44, 100%, 50%, 25%);
+}
+
+pizza|app input[type="text"]:hover::placeholder {
+    color: var(--med-grey);
+}
+
+pizza|app input[type="text"] {
+    border: 3px solid var(--bright-gold);
+    border-radius: 5px;
+}
+
+pizza|app input[type="text"]:focus {
+    border: 3px solid var(--bright-gold);
+    color: var(--black);
+    background-color: hsla(44, 100%, 50%, 25%);
+}
+
+pizza|app select {
+    height: 2em;
+    border-radius: 5px;
+    margin: 0 1em;
+}

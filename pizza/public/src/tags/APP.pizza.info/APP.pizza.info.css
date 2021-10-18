@@ -1,0 +1,35 @@
+/**
+ * @overview 'APP.pizza.info' styles.
+ */
+
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace tibet url("http://www.technicalpursuit.com/1999/tibet");
+@namespace pizza url("urn:app:pizza");
+
+pizza|info {
+    display: flex;
+    justify-content: space-around;
+    flex-basis: 3em;
+    flex-grow: 0;
+}
+
+pizza|info div[class~="field"] {
+    flex-grow: 1;
+    width: 100%;
+    padding: 2em;
+
+    display: flex;
+    justify-content: center;
+    align-items: middle;
+}
+
+pizza|info label {
+    font-size: 1.25em;
+    line-height: 2em;
+    padding-right: 1em;
+}
+
+pizza|info input[type="text"] {
+    height: 1.5em;
+    font-size: 1.25em;
+}

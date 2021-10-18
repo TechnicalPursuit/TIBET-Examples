@@ -1,0 +1,94 @@
+/**
+ * @file tibet_normalize.css
+ * @overview Additional CSS baseline styles to set things up for TIBET apps.
+ *     While we leverage normalize.css (less) as a baseline the goals of that
+ *     code are less to "reset" than they are to "unify". In other words, it
+ *     does nothing to create a CSS baseline focused on application widgetry.
+ *     We need something that's stricter about margins, padding, borders, etc.
+ *
+ * @copyright Portions Copyright 2013 Yahoo! Inc. All rights reserved.
+ *     Yahoo! portions Licensed under the BSD License.
+ */
+
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace tsh url("http://www.technicalpursuit.com/1999/tshell");
+
+/* =======================================================================
+ * TIBET CSS Baseline Additions
+ * ----------------------------------------------------------------------- */
+
+/* stylelint-disable */
+
+.select,
+*|*[class~="select"] {
+    -webkit-touch-callout: default;
+    -webkit-user-select: text;
+    -khtml-user-select: text;
+    -moz-user-select: text;
+    -o-user-select: text;
+    /* IE/Edge use the -webkit- prefix for user-select */
+    user-select: text;
+    cursor: auto;
+}
+
+.noselect,
+*|*[class~="noselect"] {
+    -webkit-touch-callout: none;
+    -webkit-user-select: none;
+    -khtml-user-select: none;
+    -moz-user-select: none;
+    -o-user-select: none;
+    /* IE/Edge use the -webkit- prefix for user-select */
+    user-select: none;
+    cursor: default;
+}
+
+h1,
+h2,
+h3,
+h4,
+h5,
+h6 {
+
+    display: block;
+}
+
+* ul li {
+
+    list-style: none;
+}
+
+a {
+
+    cursor: pointer;
+}
+
+table,
+pre {
+
+    margin: 0;
+}
+
+html {
+
+    margin: 0;
+    padding: 0;
+}
+
+html,
+body {
+
+    position: absolute;
+
+    top: 0;
+    right: 0;
+    bottom: 0;
+    left: 0;
+
+    border: 0;
+
+    color: black;
+
+    background-color: white;
+    overflow: hidden;
+}

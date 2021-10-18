@@ -1,0 +1,16 @@
+{
+    "//" : "TIBET project file. Set configuration parameters here.",
+    "project": {
+        "name": "pizza"
+    },
+    "tibet": {
+        "dna": "default",
+        "xmlns": "urn:app:pizza"
+    },
+    "boot": {
+        "use_login": false
+    },
+    "log": {
+        "missing_isresponderfor": false
+    }
+}

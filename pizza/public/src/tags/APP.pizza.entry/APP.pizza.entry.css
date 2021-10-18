@@ -1,0 +1,30 @@
+/**
+ * @overview 'APP.pizza.entry' styles.
+ */
+
+@namespace url("http://www.w3.org/1999/xhtml");
+@namespace tibet url("http://www.technicalpursuit.com/1999/tibet");
+@namespace pizza url("urn:app:pizza");
+
+pizza|entry {
+    display: flex;
+    flex-direction: row;
+}
+
+pizza|entry > *|* {
+    flex-grow: 1;
+    width: 50%;
+}
+
+pizza|entry header > h1 {
+    margin: 0;
+    text-align: center;
+    width: 100%;
+    height: 2em;
+    line-height: 2em;
+
+    color: var(--off-black);
+    background: var(--white);
+    border-top: 2px solid var(--black);
+    border-bottom: 2px solid var(--black);
+}
