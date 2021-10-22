@@ -5,35 +5,40 @@
 ## Overview
 
 Inspired by a failed attempt to build a pizza-ordering application under
-pressure, the Pizza Le' Monad e! application is a tongue-in-cheek exercise in
-turning lemons into lemonade.
+pressure, the Pizza Le' Monad e! application was initially undertaken as an
+exercise in turning lemons into lemonade.
 
-    "Your only true failures are the unexamined ones." -- Scott Shattuck
+    "The only true failures are unexamined ones."
 
-In the spirit of examination and growth, Pizza Le' Monad e! was undertaken to
-help TIBET grow, to use the main features of TIBET while ensuring each worked
-as intended, was easy to use, and had complete code samples and test coverage.
+In the spirit of examination and growth, Pizza Le' Monad e! was developed to
+help TIBET grow; to (re)examine and exercise the main features of TIBET,
+ensuring each works as intended, is easy to use, and has complete code samples
+and test coverage.
 
-In particular, the pizza application focuses on leveraging TIBET's:
+Key features of the pizza application include:
 
-- Markup-first authoring (XHTML templates linked to Object-Oriented types)
-- Orthagonal markup enhancement via namespaced attributes (Markup "mixins")
-- Shared data modeling across components using industry-standard URN syntax
-- Signal-driven behavior modeling (minus all add/remove listener overhead)
+- Markup-first authoring (XHTML templates linked to Object-Oriented types);
+- Orthagonal markup enhancement via namespaced attributes (Markup "mixins");
+- MVVM architecture with a loosely-coupled component data layer using URIs;
+- Signal-driven behavior integration (without add/remove listener overhead);
 - Full-stack functionality including quick and easy route/mock construction.
 
-Note that this application is considered a permanent work-in-progress, evolving
-and expanding to include more of TIBET's functionality over time. It's also
-intended to be the go-to sample you refer to when you want to see various
-aspects of TIBET in action.
+This application is intended as a permanent work-in-progress, evolving and
+expanding to encompass TIBET's full feature set... and perhaps someday [ordering pizzas](https://github.com/RIAEvangelist/node-dominos-pizza-api) ;).
 
-That unscripted code challenge is gonna go a whole lot smoother next time ;)
+Pizza Le' Monad e! is also the go-to TIBET application you should refer to when
+you want to see various aspects of TIBET in action... and then copy/paste them.
+
+This document works through the high points of the application from server to
+client. The source code is also heavily documented to assist your exploration.
+
+**_New to TIBET? Start with Hello World! via [TIBET Quickstart](https://tibetjs.com/docs/quickstart.html) and [TIBET Essentials](https://tibetjs.com/docs/essentials.html)._**
+
+On with the show...
 
 ## Installation
 
-_If you're new to TIBET start with [TIBET Quickstart](https://tibetjs.com/docs/quickstart.html) and [TIBET Essentials](https://tibetjs.com/docs/essentials.html)._
-
-To work with this demo application first install/initialize TIBET:
+To work with this demo, first install/initialize TIBET:
 
 ```
 npm install -g tibet
@@ -55,14 +60,43 @@ cd TIBET-Examples/pizza
 tibet init
 ```
 
-With those steps complete you're ready to run the application.
+Once initialization is complete the application is ready to run.
 
 ## Startup
 
-To start the `pizza` application's TIBET server use `tibet start`:
+Starting the application consists of starting the [TIBET Data
+Server](https://tibetjs.com/docs/tds.html) and opening the application URI to
+load the client code into your web browser.
+
+_NOTE: A Chromium-based browser such as Chrome or Edge Chromium is recommended._
+
+#### TIBET Data Server (TDS)
+
+To start the application server use `tibet start`:
 
 ```
-tibet start
+$ tibet start
+
+                            ,`
+                     __,~//`
+  ,///,_       .~///////'`
+      '//,   ///'`
+         '/_/'
+           `
+   /////////////////     /////////////// ///
+   `//'````````///      `//'```````````  '''
+   ,/`          //      ,/'
+  ,/___          /'    ,/_____
+ ///////;;,_     //   ,/////////;,_
+          `'//,  '/            `'///,_
+              `'/,/                '//,
+                 `/,                  `/,
+                   '                   `/
+                                        '/
+                                         /
+                                         '
+
+1634597538677 [7] TDS TIBET Data Server 5.5.0 (development)
 
 ...snipped...
 
@@ -71,18 +105,19 @@ tibet start
 1634526311463 [7] TDS Application Started (server)
 ```
 
-_NOTE: to use a different port use the --port flag: tibet start --port NNNN._
+NOTE: to use a different port use the --port flag: `tibet start --port NNNN`.
+
+#### TIBET Client Application
 
 Once the server starts you'll see lines similar to those above. Use the first
-link marked (dev) to open the application home page in your default browser:
+link marked (dev) to open the application home page:
 
 ```
 http://127.0.0.1:1407#?boot.profile=development
 ```
 
-_NOTE: Chromium-based browsers (Chrome, Edge Chromium, etc) are recommended._
-
-The primary application interface should resemble this screenshot:
+While the application is starting the browser will display a progress bar. Upon
+completion you'll see the application's home page UI:
 
 <img src="./public/media/pizza-pizza-empty.png"/>
 
@@ -91,41 +126,135 @@ The primary application interface should resemble this screenshot:
 Using the application is simple.
 
 To enable sending an order to the server you need to enter a name, phone number,
-and at least one pizza or side dish. Name and phone number are simple text entry
-fields. Pizzas and side dishes are added via the `Add To Order` buttons
-respectively.
-
-You can clear/reset the UI at any time using the `Clear All` button.
+and at least one pizza or side dish.
 
 Once you've provided a name, phone number, and at least one product the `Order
 Now` button will activate, allowing you to send the order JSON to the server.
+
+With the order sent you can either cancel it (which sends it back to the
+server for a status update) or reset the UI to set yourself up to create a new
+order.
+
+That's it.
+
+The primary UI components which support this flow are outlined below.
+
+#### pizza:info
+
+Name and phone number are simple text entry fields. When they detect a changed
+value they automatically cause the current order details to update.
+
+<img src="./public/media/pizza-info.png"/>
+
+#### pizza:options and pizza:sides
+
+Adjust the pizza size if desired, select the toppings or side dishes you want, and click the
+appropriate `Add To Order` button. Order details will reflect your planned
+order.
+
+<img src="./public/media/pizza-options.png" width="45%"/>
+<img src="./public/media/pizza-sides.png" width="45%"/>
+
+#### pizza:orderdetails
+
+Current order information is reflected in the `Order Details` section at the
+bottom left. As you make changes they're reflected here.
+
+Once the minimum requirements for an order are in place the `Order Now` button
+is enabled.
+
+You can clear/reset the UI at any time using the `Clear All` button.
+
+<img src="./public/media/pizza-details.png" width="45%"/>
+
+#### pizza:orderstatus
 
 In the demo application the server's `/order` route simply adds a timestamp and
 status code and returns the order. The client responds by rendering that
 information in the `Order Status` section, deactivating the `Order Now` button,
 and activating the `Cancel Order` button.
 
-With the order "pending" you can either cancel it (which sends it back to the
-server for a status update) or use `Clear All` to set yourself up to enter a new
-order.
+<img src="./public/media/pizza-status-pending.png" width="45%"/>
 
-That's it.
+Of course, the point isn't to order a pizza... at least, not yet.
 
-Of course, the point isn't to order a pizza, it's to provide a foundation for
-testing and demonstrating key TIBET features.
+The goal is to provide a foundation for demonstrating and testing key TIBET features.
 
-Let's start with a look at the TIBET stack's primary components.
 
-## Full Stack
+## A Full Stack Framework
 
 It's been said a key differentiating factor between libraries and frameworks is
 "you call libraries; frameworks call you."
 
-By that measure TIBET is a true framework, and a full-stack framework at that.
+By that measure TIBET is a true framework; a full-stack framework composed
+of a server, client, and integrated tooling.
+
+The pizza application relies on the server to vend the client application and
+support an `/order` route that accepts a JSON order, augments it, and returns
+it.
+
+The client stack is responsible for the look and feel (visual components and
+user event handlers) which constitute the application interface.
+
+The CLI supports the entire development and deployment lifecycle.
+
+### The TIBET CLI
+
+Earlier you used the `tibet init` command to initialize the application.
+
+As you may have noticed, when `init` completes you're presented with additional command recommendations that let you lint, test, build, and start the application:
+
+```
+Initializing 'pizza' project with 'default' dna...
+installing project dependencies via `npm install`...
+linking TIBET into project via `npm link tibet`.
+TIBET development dependency linked.
+project initialized successfully.
+Use `tibet lint` to check for coding standard violations
+Use `tibet test` to test your application's core features
+Use `tibet build --minify` to build production packages for deployment
+Use `tibet start` to run your application.
+```
+
+Each of these are part of the [TIBET CLI](https://tibetjs.com/docs/cli.html),
+TIBET's integrated command line tool.
+
+TIBET projects are fully-instrumented with linting, testing, and building
+features that let you keep your code clean, correct, and compact.
+
+To see the currently available CLI options use `tibet help`:
+
+```
+$ tibet help
+
+The tibet command can invoke TIBET built-ins, custom commands,
+tibet make targets, grunt targets, or gulp targets based on your
+project configuration and your specific customizations.
+
+For a list of available commands use `tibet` or `tibet --help`.
+
+`tibet help` lets you view documentation found in both your
+project and in the TIBET library on any available subjects.
+
+Project help topics include:
+
+	sample
+
+Library help topics include:
+
+	tsh apropos build clone config context couch decrypt
+	deploy doclint echo electron encrypt freeze help init
+	lint make open package path quickstart reflect release
+	resource rollup start strip tag tds test thaw tws type
+	user version
+
+pizza@0.1.0 /Users/ss/.nvm/v12.18.1/bin/tibet
+```
 
 ### TIBET Data Server (TDS)
 
-When you invoke `tibet start` the TIBET Data Server (TDS), a penetration-tested
+When you invoke `tibet start` the [TIBET Data Server
+(TDS)](https://tibetjs.com/docs/tds.html), a penetration-tested
 Node.js/Express server, launches and loads plugins handling security, logging,
 etc.
 
@@ -134,8 +263,12 @@ published route handlers it finds. Sample files are contained in each of these
 directories so you have a starting point for server-side route and mock
 development.
 
-From plugins to routes to mocks, place things in the proper directory and the
-TDS will automatically handle loading and integrating them.
+Built with a framework's "it calls you" model in mind, placing things in the
+proper directory and following the proper naming conventions will cause the
+server to automatically find, load, and activate your extensions.
+
+You don't have to build a server, you just have to add the logic specific to
+your routes and the TDS handles the rest.
 
 #### `/order` Route
 
@@ -171,6 +304,10 @@ app.post('/order', options.parsers.json, function(req, res) {
 });
 ```
 
+The TDS doesn't hot-rescan for new routes so if the server is running when you
+make this kind of change you need to restart it to ensure it loads your new
+route(s).
+
 #### `/order` Testing
 
 Each sample file includes instructions on how to test that route, typically by
@@ -178,7 +315,8 @@ using `curl` in combination with one or more static files from the `mocks`
 directory.
 
 To test the `/order` route a pair of JSON files were created with the planned
-JSON for a new or existing order:
+JSON for a new or existing order. These were placed in the `mocks` directory for
+easy use:
 
 ##### `mocks/mock_neworder_post.json`
 
@@ -206,16 +344,20 @@ $ curl -XPOST http://127.0.0.1:1407/order \
 ```
 
 With the server route in place and tested it's time to move to the client.
-Before we go however, the TDS has one more feature worth mentioning....
 
-#### Hot-Patching (not reloading)
+Before moving on, the TDS has one more feature worth mentioning....
 
-In addition to auto-loading plugins, routes, and mocks, the TDS optionally
-observes all assets vended to the client and notifies the client of any edits
-you make to those assets.
+### Hot-Patching
+
+In addition to loading plugins, routes, and mocks, the TDS optionally observes
+all assets vended to the TIBET client and notifies the client of any edits you
+make to those assets.
+
+#### Server-side
 
 Asset observation is provided by the TDS's `watch` plugin. When `NODE_ENV` is
-`development` the `watch` plugin is automatically loaded.
+`development` the `watch` plugin is automatically loaded. It's off for
+production by default.
 
 You can confirm the `watch` plugin is active by viewing the TDS's startup log:
 
@@ -227,12 +369,14 @@ You can confirm the `watch` plugin is active by viewing the TDS's startup log:
 1634526311463 [7] TDS Application Started (server)
 ```
 
+#### Client-side
+
 The TIBET Client includes hot-patch functionality so your changes can be
 automatically integrated without reloading, preserving client-side application
 state.
 
-Launching the client using a `development` or `contributor` profile activates
-the watcher. You can confirm this by viewing the server's console log:
+Launching the client using a `development` or `contributor` boot.profile
+activates the client watcher. You can confirm this in the server's console log:
 
 ```
 1634526313222 [3] TDS Processing file watch request from ::ffff:127.0.0.1 (watch)
@@ -243,13 +387,16 @@ the watcher. You can confirm this by viewing the server's console log:
 TIBET's hot-patch functionality supports changes to your application's CSS,
 XHTML templates, types, and tests, dramatically speeding development.
 
+The development of the `pizza` application involved a handful of reloads but the
+overwhelming majority was done by leveraging TIBET's hot-patch capability.
+
 ### The TIBET Client
 
-The TIBET Client is unique, covering the entire [Client Stack](https://tibetjs.com/docs) from configuration to widgetry and everything in between. This is in contrast to what we refer to as a-la-carte libraries, libraries where each project is composed of a random assortment of modules and tools.
+The [TIBET Client](https://tibetjs.com/docs) is unique, offering a comprehensive client stack that's fully-integrated. This is in contrast to a-la-carte libraries, libraries where each project is composed of random assortments of modules and tools whose integration can pose challenges.
 
-    TIBET's not a-la-carte, it's all-the-parts.
+TIBET's not a-la-carte, it's all-the-parts.
 
-A short list of TIBET Client features exposed/leveraged in this demo includes:
+TIBET Client layers exposed/leveraged in this demo include:
 
 - [configuration](https://tibetjs.com/docs/configuration.html)
 - [loading](https://tibetjs.com/docs/loader.html)
@@ -264,17 +411,23 @@ A short list of TIBET Client features exposed/leveraged in this demo includes:
 - [data binding](https://tibetjs.com/docs/data-binding.html)
 - [custom tags](https://tibetjs.com/docs/tag-system.html)
 
-As we touch on these in the rest of this document we'll try to call each one out.
+These layers will be called out when they appear in remainder of this document.
 
-#### Application Loading
+The application startup sequence kicks things off.
+
+## Application Loading
 
 Opening the pizza application loads a splash page containing the [TIBET Configuration](https://tibetjs.com/docs/configuration.html) layer and the [TIBET Loader](https://tibetjs.com/docs/loader.html), two of the key elements of the TIBET Client Stack.
 
+The TIBET Loader loads the configured `boot.profile` (essentially a named manifest) and proceeds to load the application assets defined there. As the application loads you'll see a progress bar update as library and application assets are loaded.
+
 The `#?boot.profile=development` fragment on the application URI defines a TIBET configuration value which informs the TIBET Loader to launch a development profile. _(You can alter any `boot.*` parameter (with certain restrictions) by adding it to the URI fragment.)_
 
-The TIBET Loader loads the specified `boot.profile` (essentially a named manifest) and proceeds to load the application assets defined there. As the application loads you'll see a progress bar update as library and application assets are loaded.
-
 As it loads and activates, each TIBET application leverages the [TIBET Logging](https://tibetjs.com/docs/logging.html) subsystem. This logging foundation includes both a "boot log" and application-level logging.
+
+The boot log provides information on every asset loaded during startup along
+with any warnings or other issues that might have occurred as your application
+starts.
 
 To toggle the boot log use `Alt-UpArrow` (aka `Option-UpArrow`):
 
@@ -284,17 +437,19 @@ If you open Chrome DevTools you'll also see TIBET log output in the console.
 
 The logging layer has both `TP.*` and `APP.*` APIs. Log messages from TIBET show a 'TIBET' prefix while those from the `APP.*` APIs are prefixed by 'APP', making it easier to differentiate between framework and application messages.
 
-#### Application Rendering
+You'll see multiple calls to `APP.*` logging methods in the application source code.
 
-Once all application assets are ready the application is started and the splash screen is replaced with the application's root page. This root page can be summarized as:
+## Application Rendering
+
+Once all application assets are ready the application is started and the splash screen is replaced with the application's root page. This root page can be summarized as a single tag:
 
 ```
 <tibet:root/>
 ```
 
-The `<tibet:root/>` tag renders your application's "app tag" (`pizza:app` in this case) with optional development-support components depending on your boot profile.
+Upon expansion, the `<tibet:root/>` tag renders your application's "app tag" (`pizza:app` in this case) with optional development tools depending on your `boot.profile`.
 
-The default rendering of `<tibet:root/>` effectively translates to:
+The default rendering of `<tibet:root/>` resembles the following markup:
 
 ```
 <html>
@@ -305,23 +460,28 @@ The default rendering of `<tibet:root/>` effectively translates to:
 </html>
 ```
 
-TIBET's focus on XML/XHTML tags is why we call it a "markup first" framework.
+At the rendering level you can think of tags as macros which optionally expand to
+produce new content in the DOM. _(Not all TIBET tags are UI tags as you'll see.)_
 
-When developing with TIBET you work from the app tag down, outlining the interface and basic functionality via tags, then augmenting those tags with behavior. This approach is in contrast to tools which require you to write code to produce UI elements.
+One standout feature is that TIBET is a fully-compliant XML platform, meaning
+the rendering surface is an XML surface containing XHTML, not a "tag soup" HTML
+surface.
+
+Leveraging XML as the core rendering surface means TIBET can:
+
+- retain/enhance semantic tag meaning rather than reverting to divitis
+- style semantic XML directly using standard CSS namespace support
+- bind directly to XML-formatted data without transformation overhead
+- augment XML tags using namespace-qualified cross-cutting attributes
+- support well-formed and schema-validation checks of authored content
+
+When developing with TIBET you work from the app tag down, outlining the
+interface and basic functionality in markup, then augmenting that markup with
+behavior.
 
 ## `pizza:app`
 
-The `pizza:app` tag is, for this app, the first application-specific tag TIBET renders.
-
-At the rendering level you can think of tags as macros which optionally expand to
-produce new content in the DOM. _(Not all TIBET tags are UI tags as we'll see.)_
-
-One standout feature is that TIBET is a fully-compliant XML/XHTML platform,
-meaning the rendering surface is an XML surface containing XHTML, not a
-"tag soup" surface.
-
-In TIBET it's often the case that authored XML tag(s) are retained, keeping
-the markup semantically differentiated (no divitis).
+The `pizza:app` tag is the first application-specific tag TIBET renders.
 
 Once fully-expanded, the pizza application is composed of these key tags:
 
@@ -346,13 +506,14 @@ Once fully-expanded, the pizza application is composed of these key tags:
 The majority of the pizza application's functionality is found in the "leaf"
 tags:
 
+- pizza:info
 - pizza:options
 - pizza:sides
 - pizza:orderdetails
 - pizza:orderstatus
 
-These foundational tags all use a common structure which lets them display a
-section header, content region, and footer for buttons:
+All but `pizza:info` use a common markup structure which lets them display
+a section header, content region, and footer for buttons:
 
 ```
 <header/>
@@ -362,10 +523,11 @@ section header, content region, and footer for buttons:
 <footer/>
 ```
 
-The `public/src/tags` directory contains a directory for each tag. Each tag
-bundle contains the tag's xhtml file (if it's templated), its CSS, its `.js`
-source and test files, and a tag manifest used by the loader and other TIBET
-infrastructure tools (linter, tester, etc.).
+The `public/src/tags` directory contains a directory for each tag.
+
+Each tag bundle contains the tag's xhtml template (if it's templated), its CSS,
+its `.js` source and test files, and a tag manifest. This structure allows tags
+to be packaged and shared across projects (with certain limitations).
 
 Let's take a closer look at one of these tags, starting with the markup (of
 course ;)).
@@ -373,16 +535,15 @@ course ;)).
 ## `pizza:sides`
 
 The `pizza:sides` tag's role in the application is to render the side-dish
-options (anything that's not a pizza) and support adding one or more to the
-order.
+options (anything that's not a pizza) and support adding one or more sides to
+the order.
 
-Here's a refresher (hope you like lemon... :)):
+Here's a look back at the choices (hope you like lemon... :)):
 
 <img src="./public/media/pizza-sides.png"/>
 
-Below is a comment-stripped version of the `pizza:sides` tag template. _(Before
-you panic over CDATA blocks etc. recall this is about demonstrating what's
-possible. :))_
+Below is a comment-stripped version of the project's `pizza:sides` tag template,
+the template responsible for rendering that user interface:
 
 ### `pizza:sides.xhtml`
 
@@ -416,7 +577,7 @@ possible. :))_
 Note that:
 
 - **This template is fully-functional in terms of rendering. It renders the
-  `pizza:sides` UI without requiring a single line of JavaScript source code.**
+  `pizza:sides` UI without writing a single line of JavaScript source code.**
 
     Why does that matter? It makes it perfect for low-code drag-and-drop tooling.
 
@@ -448,30 +609,32 @@ Through their integration with [TIBET Paths](https://tibetjs.com/docs/paths.html
 #### {{ }} templates
 
 The templating block syntax `{{ }}` supports a variety of pre-built variables
-and functions as well as custom extensions. In this template we use `$_` which
-refers to the current iteration value and `.% titleCase` as a small data
+and functions as well as custom extensions. In this template `$_` is used to
+refer to the current iteration value and `.% titleCase` defines a small data
 formatting pipe so the label value is in title case.
 
 See the [TIBET Templating](https://tibetjs.com/docs/templating.html) documentation for more examples and information.
 
-#### on:
+#### `on:*`
 
 TIBET's `on:*` attributes allow you to remap DOM events and signals into
 higher-level semantic signals which can be handled anywhere on the [responder
 chain](https://tibetjs.com/docs/signaling.html#tagresp).
 
-The `defineHandler` method in `APP.pizza.sides.js` is used to define the
-specific functions which will handle these events. There's no `addListener` or
-`removeListener` overhead or leak potential, [TIBET Signaling](https://tibetjs.com/docs/signaling.html) takes care of
-everything.
+As you'll see later, the `defineHandler` method in `APP.pizza.sides.js` is used
+to define the specific functions which will handle these events.
 
-### `tibet:*`
+With TIBET there's no `addListener` or `removeListener` overhead or leak
+potential, [TIBET Signaling](https://tibetjs.com/docs/signaling.html) takes care
+of everything.
+
+### `tibet:*` tags
 
 While most frameworks use tags only for UI rendering, TIBET includes `info`
 and `action` tags which can supply data or perform actions in response to
 events.
 
-The pizza application uses `tibet:data` tags to demonstrate non-UI tags while
+The `pizza:sides` tag uses a `tibet:data` tag to demonstrate non-UI tags while
 also showing one way to reduce or eliminate source code related to UI rendering.
 
 The [TIBET Tag System](https://tibetjs.com/docs/tag-system.html) documentation
@@ -515,7 +678,7 @@ TP.tag.TemplatedTag.defineSubtype('APP.pizza:sides');
 APP.pizza.sides.defineAttribute('themeURI', TP.NO_RESULT);
 
 //  Mix in checkbox items utility methods from the APP.pizza.items Type. NOTE
-//  that we resolve the getItems method to ensure we get the one being provided
+//  the resolveTrails for getItems to ensure the one used is being provided
 //  by the APP.pizza.items mixin rather than the inherited implementation.
 APP.pizza.sides.addTraits(APP.pizza.items);
 APP.pizza.sides.Inst.resolveTraits(TP.ac('getItems'), APP.pizza.items);
@@ -561,9 +724,9 @@ The `pizza:sides` tag gets a significant base feature set (event management,
 data binding, templating, and more) from `TP.tag.TemplatedTag` and its
 supertypes.
 
-The `defineHandler` call for `AddSides` ensures instances are ready to
-deal with activations of the `Add To Order` button (whose `on:click` maps
-click events to `AddSides`).
+The `defineHandler` call for `AddSides` ensures instances can deal with
+activations of the `Add To Order` button (whose `on:click` maps click events to
+`AddSides` signals).
 
 One cluster of features isn't supported out of the box however, namely the
 ability to quickly find, select, clear, toggle, and otherwise work with
@@ -582,7 +745,7 @@ also checkbox/label pairs.
 But is inheritance the best way to share checkbox field functionality?
 
 In the pizza application the answer chosen was 'no' so a simple subtype of the
-application's default root Object was created to house it:
+application's default root `APP.pizza.Object` was created to house it:
 
 ```
 APP.pizza.Object.defineSubtype('APP.pizza.items');
@@ -597,8 +760,7 @@ any attempt to create instances directly will raise an exception._
 To access the checkbox elements a [TIBET
 Path](https://tibetjs.com/docs/paths.html) is defined. This path integrates with
 TIBET's `get` and `set` methods so any attempt to `get('itemsCheckboxes')` or
-`set('itemCheckboxes')` automatically resolves the path and operates on the
-result:
+`set('itemCheckboxes')` resolves the path and operates on the result:
 
 ```
 //  Access path for locating all checkbox items under a target "body" div.
@@ -608,12 +770,9 @@ APP.pizza.items.Inst.defineAttribute('itemCheckboxes',
 ```
 
 TIBET supports access paths for XPath 1.0, JSONPath, CSS queries, and a
-Python-inspired TIBET syntax for traversal/slicing down an object path. The
-`TP.cpc` primitive creates a new CSS Path that will locate the checkbox items in
-a body div.
-
-_(As mentioned earlier, access paths are often used with TIBET Content types.
-This approach lets you create "smarter data" that remains encapsulated.)_
+Python-inspired TIBET syntax for traversal/slicing down an object path. _(As
+mentioned earlier, access paths are often used with TIBET Content types. This
+approach lets you create "smarter data".)_
 
 The remaining `pizza:items` API is defined via instance methods:
 
@@ -631,7 +790,7 @@ By mixing in `pizza:items` functionality `pizza:options` and `pizza:sides`
 gain a new attribute (the access path), new instance methods, and a new
 signal handler.
 
-### `pizza:options.js` and callNextMethod
+### `pizza:options.js` and `callNextMethod`
 
 One feature of TIBET's OO + Traits infrastructure deserves a special callout.
 
@@ -667,7 +826,7 @@ function() {
      * @returns {APP.pizza.options} The receiver.
      */
 
-    //  NOTE: this actually invokes a TRAIT method, 'reset', we acquired from
+    //  NOTE: this actually invokes a TRAIT method, 'reset', acquired from
     //  mixing the APP.pizza.items type. The callNextMethod is unlike super() in
     //  that it works to find truly "the next method in the call chain".
 
@@ -693,7 +852,7 @@ canonical.
 
 In a similar fashion, TIBET signals start at the top of the controller stack,
 work downward, descend into the DOM, change direction, and work upward from the
-target nodee to the top of the controller chain.
+target node to the top of the controller chain.
 
 Capture and bubbling semantics are preserved, but controller objects are now
 available at the start of the capture sequence and the end of the bubbling
@@ -715,8 +874,8 @@ chain can be acquired from the application instance via `getControllers()`.
 
 The application instance is created automatically by TIBET during application
 startup using a pre-built subtype of `TP.core.Application`. This application
-subtype is generated during project creation via the `tibet clone` command and
-placed in `public/src`.
+subtype is generated during project creation via the `tibet clone` CLI command
+and placed in `public/src`.
 
 In the pizza app that Type is `APP.pizza.Application`.
 
@@ -732,8 +891,9 @@ of code which help manage data for the current `order`:
 //  Location used to share the Order data.
 APP.pizza.Application.Type.defineConstant('orderURN', TP.uc('urn:app:order'));
 
-//  Reference to the server-side URI we'll POST order requests to.
-APP.pizza.Application.Type.defineConstant('serverURI', TP.uriExpandHome('/order'));
+//  Reference to the server-side URI used to POST order requests.
+APP.pizza.Application.Type.defineConstant('serverURI',
+TP.uriExpandHome('/order'));
 
 //  The order data. This is also shared as the content of the orderURN.
 APP.pizza.Application.Inst.defineAttribute('order');
@@ -795,7 +955,7 @@ connect directly to each other.
 
 ## Client/Server
 
-Connecting the client and server is the last topic we'll cover.
+Connecting the client and server is the last topic covered.
 
 Order initiation is handled by the `APP.pizza.Application` instance's
 `SendOrder` handler, typically triggered by the `Order Now` button.
@@ -803,9 +963,9 @@ Order initiation is handled by the `APP.pizza.Application` instance's
 Order cancellation is handled by `pizza:orderstatus` instance's handler for
 `CancelOrder`, triggered by the `Cancel Order` button.
 
-Each of these handlers relies on what we call a "primitive", aka an
-encapsulating function which stabilizes TIBET's APIs across platforms. In this
-case, it's the `TP.httpPost` primitive.
+Each of these handlers relies on a "TIBET primitive", aka an encapsulating
+function which stabilizes TIBET's APIs across platforms. In this case, it's the
+`TP.httpPost` primitive.
 
 [TIBET Primitives](https://tibetjs.com/docs/primitives.html) cover an extensive
 set of functions and provide a stable foundation for the rest of TIBET. While
@@ -813,7 +973,7 @@ they might appear to be "shims" they differ in that TIBET uses primitives to
 create an dependable encapsulation layer rather that patching one-off functions.
 
 Here's the `APP.pizza.Application` instance's `SendOrder` handler, which makes
-use of the `TP.httpPost` primitive to POST our order JSON to the server:
+use of the `TP.httpPost` primitive to POST the order JSON to the server:
 
 ```
 APP.pizza.Application.Inst.defineHandler('SendOrder',
@@ -831,8 +991,8 @@ function(aSignal) {
 
     order = this.get('order');
 
-    //  Ensure we clear any status flag from prior state (such as pending or
-    //  cancelled) since we allow server response fields in the order.
+    //  Ensure any status flag from prior state (such as pending or
+    //  cancelled) is cleared.
     delete order.status;
 
     //  Prep the request as a JSON string and prevent any further encoding.
@@ -843,26 +1003,27 @@ function(aSignal) {
     //  an arrow function here walks up the scope chain for 'this' resolution.
     TP.httpPost(this.getType().get('serverURI'), request).then((result) => {
         APP.debug(result);
-        //  Update our order with the augmented (order status & time) order.
+        //  Update the order with the augmented (order status & time) order.
         this.set('order', JSON.parse(result));
         this.orderChanged();
     }).catch((err) => {
-        //  Log any error but don't clear the order so we can resend etc.
+        //  Log any error but don't clear the order.
         APP.debug(err);
     });
 });
 ```
 
 TIBET's `TP.http*` primitives return "thenables" (typically `Promise` instances)
-which can be used to manage the async resolution/rejection processing.
+which can be used to manage async resolution/rejection processing.
 
 _(TIBET's Response objects are also thenables and can participate in async chains.)_
 
-In the specific case above, we handle successful POST operations by updating our
-copy of the order with the parsed JSON response data. We then invoke
-`orderChanged` to handle notifying potential observers of the new change.
+In the specific case above, successful POST operations are handled by updating
+the copy of the order with the parsed JSON response data. The `orderChanged`
+method is then invoked to handle notifying potential observers of the new
+change.
 
-Components dependent on order data are configured to observe 'OrderChange' from
+Components dependent on order data are configured to observe `OrderChange` from
 the application so they can update their UI and state as needed.
 
 ## Result Processing
@@ -897,11 +1058,12 @@ method of the `pizza:orderstatus` type being invoked.
 
 The `tagCompile` method makes a determination based on order content whether to
 render instructions or order status information. It also determines the
-`disabled` state of the `Cancel Order` button. While this functionality could be
-managed in markup, for test/demo purposes it's been placed in a compiled tag.
+`disabled` state of the `Cancel Order` button. _(While this functionality could
+be managed in markup, for test/demo purposes it's been placed in a compiled
+tag.)_
 
-With this final piece in place we've covered everything from construction of the
-server's `/order` route through handling response data from that route.
+With this final piece in place, the loop from construction of the server's
+`/order` route through handing the response to drive UI updates is complete.
 
 ## Summary
 
@@ -909,7 +1071,11 @@ The pizza application's goal is to provide a testbed for, and demonstration of,
 core TIBET functionality across the full stack.
 
 This document has outlined some of the major aspects of the application, the
-TIBET feature set, and the TIBET documentation suite.
+TIBET feature set, and relevant sections in the TIBET documentation
+suite.
+
+We invite you to explore further by digging into the project code, playing with
+the project's template files, source code, and other features.
 
 Application server logic resides at the top project level in numerous
 directories, the most important of which are `plugins`, `routes`, and `mocks`.
@@ -917,10 +1083,8 @@ directories, the most important of which are `plugins`, `routes`, and `mocks`.
 Primary client types are in `public/src`, general purpose types are found in
 `public/src/types`, and the various tags are found in `public/src/tags`.
 
-We invite you to explore further by digging into the project code, playing with
-the project's template files, source code, and other features.
-
+<br/>
 Happy hacking!
 
-
+<br/>
 -- Team TIBET

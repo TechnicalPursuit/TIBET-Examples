@@ -53,6 +53,21 @@
     <resource href="~app_media/osi_logo.png" no-inline="true"/>
     <resource href="~app_media/privacy.png" no-inline="true"/>
     <resource href="~app_media/lemons.jpg" no-inline="true"/>
+    <resource href="~app_media/pizza-bootlog.png" no-inline="true"/>
+    <resource href="~app_media/pizza-details-enabled.png" no-inline="true"/>
+    <resource href="~app_media/pizza-details-partial.png" no-inline="true"/>
+    <resource href="~app_media/pizza-details.png" no-inline="true"/>
+    <resource href="~app_media/pizza-info.png" no-inline="true"/>
+    <resource href="~app_media/pizza-loader.png" no-inline="true"/>
+    <resource href="~app_media/pizza-options-selected.png" no-inline="true"/>
+    <resource href="~app_media/pizza-options.png" no-inline="true"/>
+    <resource href="~app_media/pizza-pizza-empty.png" no-inline="true"/>
+    <resource href="~app_media/pizza-pizza.png" no-inline="true"/>
+    <resource href="~app_media/pizza-sides-selected.png" no-inline="true"/>
+    <resource href="~app_media/pizza-sides.png" no-inline="true"/>
+    <resource href="~app_media/pizza-status-cancelled.png" no-inline="true"/>
+    <resource href="~app_media/pizza-status-instructions.png" no-inline="true"/>
+    <resource href="~app_media/pizza-status-pending.png" no-inline="true"/>
 </config>
 
 <config id="tests">
