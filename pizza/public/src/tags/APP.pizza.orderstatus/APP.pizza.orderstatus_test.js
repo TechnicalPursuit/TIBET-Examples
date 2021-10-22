@@ -13,9 +13,9 @@
 APP.pizza.orderstatus.Type.describe('APP.pizza:orderstatus',
 function() {
 
-    this.it('Is a TP.tag.TemplatedTag tag', function(test, options) {
+    this.it('Is a TP.tag.ComputedTag tag', function(test, options) {
         test.assert.isKindOf(APP.pizza.orderstatus,
-            'TP.tag.TemplatedTag');
+            'TP.tag.ComputedTag');
     });
 });
 
