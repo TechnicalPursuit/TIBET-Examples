@@ -8,7 +8,7 @@ Inspired by a failed attempt to build a pizza-ordering application under
 pressure, the Pizza Le' Monad e! application was initially undertaken as an
 exercise in turning lemons into lemonade.
 
-    "The only true failures are unexamined ones."
+    "The only true failures are the unexamined ones." -- Scott Shattuck
 
 In the spirit of examination and growth, Pizza Le' Monad e! was developed to
 help TIBET grow; to (re)examine and exercise the main features of TIBET,
