@@ -95,9 +95,7 @@ Enter a name and phone number for your order as well as at least one pizza or si
 `;
 
     //  Set the updated content, ensuring our new content is considered XHTML.
-    TP.nodeSetContent(elem, TP.xhtmlnode(content));
-
-    return elem;
+    return TP.nodeSetContent(elem, TP.xhtmlnode(content));
 });
 
 //  ------------------------------------------------------------------------
